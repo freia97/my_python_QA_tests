@@ -1,11 +1,11 @@
-import json
+from json.decoder import JSONDecodeError
+import requests
 
-
-string_as_json_format ='{"answer":"hi, User"}'
-obj = json.loads(string_as_json_format)
-
-key ="answer"
-if key in obj:
-    print(obj[key])
-else:
-    print(f"Ключа {key} в JSON нет")
+payloat = {"name": "Vsevolod"}
+response = requests.get("https://playground.learnqa.ru/api/hello", params=payloat)
+print(response.text)
+try:
+    parsed_response_text = response.json()
+    print(parsed_response_text)
+except JSONDecodeError:
+    print("Response is not a JSON format")
